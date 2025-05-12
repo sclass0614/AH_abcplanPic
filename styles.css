@@ -1,0 +1,367 @@
+/*******************************************
+       * 1. 변수 및 기본 설정
+       *******************************************/
+/* 변수 정의 */
+:root {
+    --main-color: #235135;
+    /* 진한 초록색 */
+    --light-color: #e9f2ef;
+    /* 연한 민트색 */
+    --accent-color: #5a8f7b;
+    /* 중간 초록색 */
+    --border-color: #cccccc;
+    /* 회색 */
+    --light-border-color: #eeeeee;
+    /* 연한 회색 (테두리용) */
+    --button-color: #ededed;
+}
+
+/* 기본 리셋 및 전역 스타일 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: #f5f5f5;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+.container {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    border: none;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 헤더 영역 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--main-color);
+}
+
+/* 메인 콘텐츠 영역 스타일 */
+.main_content {
+    padding: 1rem;
+    flex: 1;
+    overflow: auto;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 2rem;
+    height: 100%;
+}
+
+/* 테이블 영역 스타일 */
+.table-container {
+    flex: 4;
+    min-width: 300px;
+    overflow: auto;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.table-container h2 {
+    margin-bottom: 1rem;
+    color: var(--main-color);
+}
+
+#activityTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    table-layout: fixed; /* 고정 테이블 레이아웃 사용 */
+}
+
+#activityTable th, 
+#activityTable td {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    text-align: center; /* 중앙 정렬로 변경 */
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+/* 활동명, 시작시간, 종료시간 열 너비 조정 */
+#activityTable th:nth-child(1),
+#activityTable td:nth-child(1) {
+    width: 40%; /* 활동명 너비 */
+    min-width: 100px; /* 최소 너비 설정 */
+}
+
+#activityTable th:nth-child(2),
+#activityTable td:nth-child(2) {
+    width: 20%; /* 시작시간 너비 */
+    min-width: 100px; /* 최소 너비 설정 */
+}
+
+#activityTable th:nth-child(3),
+#activityTable td:nth-child(3) {
+    width: 20%; /* 종료시간 너비 */
+    min-width: 100px; /* 최소 너비 설정 */
+}
+
+#activityTable th:nth-child(4),
+#activityTable td:nth-child(4) {
+    width: 20%; /* 사진URL 너비 */
+}
+
+#activityTable th {
+    background-color: var(--light-color);
+    font-weight: bold;
+}
+
+#activityTable tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#activityTable tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+#activityTable tbody tr.selected {
+    background-color: var(--light-color);
+}
+
+/* A4 카드 영역 스타일 */
+.card-container {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 100%;
+    position: relative;
+}
+
+.card-container h2 {
+    margin-bottom: 1rem;
+    color: var(--main-color);
+    align-self: flex-start;
+}
+
+/* A4 용지 가로 방향 (Landscape) 비율: 297mm x 210mm */
+.a4-card {
+    width: 80%;                 /* 원하는 가로폭 */
+    aspect-ratio: 297 / 210;    /* A4 비율 지정 → 높이는 자동 */
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 이미지 영역 스타일 */
+.card-image {
+    width: 65%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* 4:3 비율의 이미지 */
+.card-image img {
+    width: 100%;/* 컨테이너의 너비에 맞춤 */
+    height: 100%; /* 4:3 비율을 위해 너비의 3/4 (75%)로 설정 */
+    object-fit: cover; /* 이미지가 영역을 가득 채우도록 설정 */
+    align-self: center; /* 세로 중앙 정렬 */
+}
+
+/* 활동명 영역 스타일 */
+.activity-info {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--main-color);
+    padding:0;
+    margin-bottom: 1rem;
+}
+
+.empty-space {
+    width: 100%;
+    height: 10%;
+}
+
+/* 활동명 텍스트 영역 - 일관된 비율의 폰트 크기 */
+.activity-textarea {
+    margin:0;
+    padding:0;
+    width: 100%;
+    height: 70%; /* 로고를 위한 공간 확보를 위해 높이 조정 */
+    font-size:2vw;
+    line-height: 1.5;
+    border: none; /* 테두리 제거 */
+    resize: none;
+    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+    /* 활동 카드 미리보기 제목과 동일한 스타일 적용 */
+    color: var(--main-color);
+    font-weight: bold;
+    /* 텍스트 가로 세로 중앙 정렬 */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 인쇄 시 글자 크기와 일관성 유지를 위한 설정 */
+    max-width: 100%;
+    box-sizing: border-box;
+    outline: none; /* 포커스 시 테두리 제거 */
+}
+
+/* 로고 영역 스타일 */
+.logo-container {
+    width: 100%; /* activity-info와 같은 너비 */
+    height: 20%; /* 지정된 높이 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto; /* 아래쪽으로 배치 */
+    padding: 1rem;   
+}
+
+.logo-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.print-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.print-button:hover {
+    background-color: var(--main-color);
+}
+
+/* 인쇄 시 스타일 */
+@media print {
+    @page {
+        size: A4 landscape; /* A4 가로 방향 설정 */
+        margin: 0;
+    }
+    
+    html, body {
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    
+    body * {
+        visibility: hidden;
+    }
+    
+    .a4-card, .a4-card * {
+        visibility: visible;
+    }
+    
+    .a4-card {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        overflow: hidden;
+        transform: none;
+    }
+
+    .activity-textarea {
+        font-size: 4.648vw;
+    }
+}
+
+/* 테이블 헤더 영역 스타일 */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.reference-date-container {
+    display: flex;
+    align-items: center;
+}
+
+.reference-date-input {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 150px;
+    cursor: pointer;
+    background-color: white;
+    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+}
+
+/* 기본 date 입력 요소 스타일 커스터마이징 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    padding: 5px;
+    background-color: transparent;
+}
