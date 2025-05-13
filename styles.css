@@ -86,7 +86,7 @@ body {
 /* 테이블 영역 스타일 */
 .table-container {
     flex: 4;
-    min-width: 300px;
+    min-width: 100px;
     overflow: auto;
     border: 2px solid var(--border-color);
     border-radius: 8px;
@@ -167,6 +167,7 @@ body {
     border-radius: 8px;
     padding: 1rem;
     width: 100%;
+    min-width: 100px;
     position: relative;
 }
 
