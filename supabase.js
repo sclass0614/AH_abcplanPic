@@ -1,22 +1,15 @@
-// Supabase API 키 및 URL 상수
 const SUPABASE_URL = "https://dfomeijvzayyszisqflo.supabase.co";
 const SUPABASE_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmb21laWp2emF5eXN6aXNxZmxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4NjYwNDIsImV4cCI6MjA2MDQ0MjA0Mn0.-r1iL04wvPNdBeIvgxqXLF2rWqIUX5Ot-qGQRdYo_qk"
-//service rollkey사용해야함
 
 function initSupabase() {
-  // 이미 생성되어 있으면 재사용
   if (!window.supabase || !window.supabase.from) {
     window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log("✅ Supabase 클라이언트가 새로 생성되었습니다.");
-  } else {
-    console.log("🔄 Supabase 클라이언트를 재사용합니다.");
   }
   return window.supabase;
 }
-// 사용하려는 위치에서 ↓ 이렇게 두 줄
-const supabase = initSupabase(); // 1. 클라이언트 가져오기
 
-// 직원 정보를 가져오는 함수
+const supabase = initSupabase();
+
 async function getactivities_plan() {
   try {
     const { data, error } = await supabase
@@ -24,13 +17,11 @@ async function getactivities_plan() {
       .select('활동명, 시작시간, 종료시간, 참고사진url');
     
     if (error) {
-      console.error('계획 정보 로드 에러:', error);
       return [];
     }
     
     return data || [];
   } catch (error) {
-    console.error('계획 정보 로드 중 예외 발생:', error);
     return [];
   }
 }
